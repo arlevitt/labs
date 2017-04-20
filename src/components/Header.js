@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
     render() {
@@ -57,7 +58,7 @@ export default class Header extends Component {
                         </form>
                         <ul className="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">Link</a>
+                                <Link to={'/login'}>Login</Link>
                             </li>
                             <li className="dropdown">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">Dropdown<strong
@@ -75,7 +76,7 @@ export default class Header extends Component {
                                     <li className="divider">
                                     </li>
                                     <li>
-                                        <a href="#">Separated link</a>
+                                        <Link to={'/login'}>Log Out</Link>
                                     </li>
                                 </ul>
                             </li>

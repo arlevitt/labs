@@ -1,5 +1,31 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+@media (min-width: 768px) {
+    .sb-fixed {
+        position: fixed;
+        width: 150px;
+        top: 50px;
+    }
+
+    #main {
+        width:calc(100% - 150px);
+        float: right;
+    }
+}
+
+.full-height {
+    position: relative;
+    top: 50px;
+    min-height: 768px;
+    border: solid 5px red;
+}
+
+.footer {
+    border: solid 1px green;
+    position: relative;
+    top: 50px;
 }

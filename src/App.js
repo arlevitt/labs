@@ -6,6 +6,7 @@ import './App.css';
 
 import Header from './components/Header';
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import Login from './components/Login';
 
@@ -17,10 +18,15 @@ class App extends Component {
                     <div className="row">
                         <Header />
                         <Nav />
+                    </div>
+                    <div className="row full-height">
                         <div id="main" className="col-md-10">
                             <Route exact={true} path="/" component={Home} />
                             <Route path="/login" component={Login} />
                         </div>
+                    </div>
+                    <div className="row">
+                        <Footer />
                     </div>
                 </div>
             </Router>
