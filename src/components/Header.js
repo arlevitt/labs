@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
+    constructor(props) {
+        super(props);
+    alert('yo');
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    }
+
+    handleLogoutClick(event) {
+        this.props.logout(false);
+    }
+
     render() {
         return (
             <div className="col-md-12">
@@ -56,10 +66,12 @@ export default class Header extends Component {
                                 Submit
                             </button>
                         </form>
-                        <ul className="nav navbar-nav navbar-right">
+                        {this.props.isLoggedIn &&
+                            <ul className="nav navbar-nav navbar-right">
                             <li>
                                 <Link to={'/login'}>Login</Link>
                             </li>
+
                             <li className="dropdown">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">Dropdown<strong
                                     className="caret"></strong></a>
@@ -76,11 +88,12 @@ export default class Header extends Component {
                                     <li className="divider">
                                     </li>
                                     <li>
-                                        <Link to={'/login'}>Log Out</Link>
+                                        <Link to={'/login'} onClick={this.handleLogoutClick}>Log Out</Link>
                                     </li>
                                 </ul>
                             </li>
                         </ul>
+                        }
                     </div>
                 </nav>
             </div>

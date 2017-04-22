@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 export default class Nav extends Component {
     render() {
+        if (!this.props.isLoggedIn) {
+            return null;
+        }
+
         return (
             <div className="col-md-2 sb-fixed">
                 <ul className="nav nav-pills nav-stacked">

@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+
+        this.state = {
+            isInitialLoad: true
+        };
 
         this.handleChange = this.handleChange.bind(this);
-        this.isInitialLoad = true;
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
         // clears the autofill
-        if (this.isInitialLoad) {
-            this.isInitialLoad = false;
+        if (this.state.isInitialLoad) {
+            this.setState({isInitialLoad: false});
             return;
         }
         const target = event.target;
@@ -24,7 +29,22 @@ class Login extends Component {
         });
     }
 
+    handleSubmit(event) {
+        event.preventDefault();
+
+        // checks if login is successful
+        if (true) {
+            this.props.onSubmit(true);
+        }
+    }
+
     render() {
+        if (this.props.isLoggedIn === true) {
+            return (
+                <Redirect to="/" />
+            )
+        };
+
         return (
             <div id="login-form" className="container-fluid">
                 <div className="row">
@@ -35,7 +55,7 @@ class Login extends Component {
                             <h1 className="text-center">Sign In</h1>
                             <p className="text-center">Need an account?</p>
                         </div>
-                        <form className="form-horizontal">
+                        <form className="form-horizontal" onSubmit={this.handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="inputEmail" className="col-sm-2 control-label">Email</label>
                                 <div className="col-sm-10">
