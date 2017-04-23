@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import axios from 'axios';
 
 class Home extends Component {
@@ -17,12 +17,11 @@ class Home extends Component {
         }
 
         var root = 'https://jsonplaceholder.typicode.com';
-        //var self = this;
         axios
-            .get(root + '/posts/1')
+            .get(root + '/posts')
             .then(response => {
-                var objs = [];
-                objs.push(response.data);
+                var objs = response.data;
+                //objs.push(response.data);
                 this.setState({ articles: objs });
             });
     }
@@ -49,8 +48,18 @@ class Home extends Component {
         }
 
         return (
-            <div>{this.state.articles[0].title}</div>
-        );
+            <div>
+                {
+                    this.state.articles.map(article => {
+                        return (
+                            <div>
+                                <Link to={`/articles/${article.id}`} params={{ articleId: '123'}}>{article.title}</Link>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        )
     }
 };
 

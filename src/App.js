@@ -6,9 +6,11 @@ import './App.css';
 
 import Header from './components/Header';
 import Nav from './components/Nav';
+import Login from './components/Login';
 import Footer from './components/Footer';
 import Home from './components/Home';
-import Login from './components/Login';
+import Article from './components/Article';
+
 
 class App extends Component {
     constructor(props) {
@@ -44,6 +46,7 @@ class App extends Component {
                         <div id="main" className="col-md-10">
                             isLoggedIn: {this.isLoggedIn().toString()}
                             <Route exact={true} path="/" component={() => <Home isLoggedIn={this.isLoggedIn()} />} />
+                            <Route path="/articles/:articleId" component={(props, state, params) => <Article isLoggedIn={this.isLoggedIn()} {...props} />} />
                             <Route path="/login" component={() => <Login isLoggedIn={this.isLoggedIn()} onSubmit={this.setIsLoggedIn} />} />
                         </div>
                     </div>
