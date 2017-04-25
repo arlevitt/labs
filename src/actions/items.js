@@ -17,9 +17,16 @@ export function itemsIsLoading(bool) {
     };
 }
 export function itemsFetchDataSuccess(items) {
+    var array = [];
+    if( Object.prototype.toString.call( items ) !== '[object Array]' ) {
+        array.push(items);
+    } else {
+        array = items;
+    }
+
     return {
         type: 'ITEMS_FETCH_DATA_SUCCESS',
-        items
+        items: array
     };
 }
 

@@ -9,7 +9,7 @@ class Article extends Component {
         this.state = {
             hasErrored: false,
             isLoading: false,
-            item: null
+            items: null
         };
     }
 
@@ -24,9 +24,17 @@ class Article extends Component {
 
 
     render() {
-         if (!this.props.item) {
+         if (!this.props.items) {
             return (
                 <div className="article-preview">Loading article: {this.props.match.params.articleId}...</div>
+            );
+        }
+
+        if (this.props.items.length === 0) {
+            return (
+                <div className="article-preview">
+                    No articles are here... yet.
+                </div>
             );
         }
 
@@ -34,7 +42,7 @@ class Article extends Component {
             <div>
                 <div>isLoggedIn inside Article: {this.props.isLoggedIn.toString()}</div>
                 <div>articleId: {this.props.match.params.articleId}</div>
-                <div>{this.props.item.title}</div>
+                <div>{this.props.items[0].title}</div>
             </div>
         );
     }
@@ -42,7 +50,7 @@ class Article extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        item: state.items,
+        items: state.items,
         hasErrored: state.itemsHasErrored,
         isLoading: state.itemsIsLoading
     };
