@@ -11,7 +11,7 @@ export default class Nav extends Component {
             <div className="col-md-2 sb-fixed">
                 <ul className="nav nav-pills nav-stacked">
                     <li className="active">
-                        <Link to={'/'}>Home</Link>
+                        <Link to={'/'}>ArticleList</Link>
                     </li>
                     <li>
                         <a href="#">Profile</a>
