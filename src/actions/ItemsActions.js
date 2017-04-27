@@ -15,17 +15,18 @@ export function fetchItemsRequest() {
 
 export function itemsHasErrored(bool) {
     return {
-        type: 'ITEMS_HAS_ERRORED',
+        type: types.ITEMS_HAS_ERRORED,
         hasErrored: bool
     };
 }
 export function itemsIsLoading(bool) {
     return {
-        type: 'ITEMS_IS_LOADING',
+        type: types.ITEMS_IS_LOADING,
         isLoading: bool
     };
 }
 export function itemsFetchDataSuccess(body) {
+    console.log('BODY!: ' + body);
     var array = [];
     if(!Array.isArray(body) && !Array.isArray(body.items)) {
         console.log('item is single');
@@ -44,27 +45,31 @@ export function itemsFetchDataSuccess(body) {
 
 export function itemsFetchData2() {
     return dispatch => {
-        dispatch(fetchItemsRequest())
+        dispatch(fetchItemsRequest());
         return fetch('http://example.com/posts')
-            .then(res => res.json())
+            .then(response => response.json())
             .then(json => dispatch(itemsFetchDataSuccess(json.body)))
             .catch(ex => dispatch(itemsHasErrored(ex)))
     }
 }
 
 export function itemsFetchData(url) {
-    return (dispatch) => {
-        dispatch(itemsIsLoading(true));
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch(itemsIsLoading(false));
-                return response;
-            })
+    return dispatch => {
+        //dispatch(itemsIsLoading(true));
+        dispatch(fetchItemsRequest());
+        return fetch(url)
+            // .then((response) => {
+            //     if (!response.ok) {
+            //         throw Error(response.statusText);
+            //     }
+            //     dispatch(itemsIsLoading(false));
+            //     return response;
+            // })
             .then((response) => response.json())
-            .then((json) => dispatch(itemsFetchDataSuccess(json)))
-            .catch(() => dispatch(itemsHasErrored(true)));
+            .then(json => dispatch(itemsFetchDataSuccess(json)))
+            .catch(ex => {
+                console.log('ERROR: ' + ex.toString());
+                dispatch(itemsHasErrored(true))
+            });
     };
 }

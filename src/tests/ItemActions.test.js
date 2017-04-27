@@ -5,7 +5,8 @@ import * as types from '../reducers/ItemTypes'
 import nock from 'nock'
 
 const middlewares = [ thunk ]
-const mockStore = configureMockStore(middlewares)
+const mockStore = configureMockStore(middlewares);
+const url = 'http://example.com/posts';
 
 describe('async actions', () => {
     afterEach(() => {
@@ -24,7 +25,8 @@ describe('async actions', () => {
 
         const store = mockStore({ items: [] });
 
-        return store.dispatch(actions.itemsFetchData2())
+        return store.dispatch(actions.itemsFetchData(url))
+        //return store.dispatch(actions.itemsFetchData2())
             .then(() => { // return of async actions
                 expect(store.getActions()).toEqual(expectedActions)
             })
