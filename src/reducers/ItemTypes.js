@@ -1,3 +1,8 @@
+export const ITEMS_FETCH_REQUEST = 'ITEMS_FETCH_REQUEST';
+export const ITEMS_FETCH_DATA_SUCCESS = 'ITEMS_FETCH_DATA_SUCCESS';
+export const ITEMS_DELETE_SUCCESS = 'ITEMS_DELETE_SUCCESS';
+
+
 export function itemsHasErrored(state = false, action) {
     switch (action.type) {
         case 'ITEMS_HAS_ERRORED':
@@ -6,6 +11,7 @@ export function itemsHasErrored(state = false, action) {
             return state;
     }
 }
+
 export function itemsIsLoading(state = false, action) {
     switch (action.type) {
         case 'ITEMS_IS_LOADING':
@@ -14,12 +20,13 @@ export function itemsIsLoading(state = false, action) {
             return state;
     }
 }
+
 export function items(state = [], action) {
     switch (action.type) {
-        case 'ITEMS_FETCH_DATA_SUCCESS':
-            return action.items;
-        case 'DELETE_ITEM_SUCCESS':
-            return action.items;
+        case ITEMS_FETCH_DATA_SUCCESS:
+            return action.body;
+        case 'ITEMS_DELETE_SUCCESS':
+            return action.body;
         default:
             return state;
     }

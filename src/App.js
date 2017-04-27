@@ -21,6 +21,9 @@ class App extends Component {
 
         this.state = {
             isLoggedIn: localStorage.getItem('isLoggedIn') === 'true' || false,
+            hasErrored: false,
+            isLoading: false,
+            items: null
         };
 
         this.setIsLoggedIn = this.setIsLoggedIn.bind(this);

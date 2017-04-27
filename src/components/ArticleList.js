@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { ApiUrls, itemsFetchData } from '../actions/items';
+import { ApiUrls, itemsFetchData } from '../actions/ItemsActions';
 
 class ArticleList extends Component {
     constructor(props) {

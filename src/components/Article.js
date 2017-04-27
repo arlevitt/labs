@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ApiUrls, itemsFetchData } from '../actions/items';
+import { ApiUrls, itemsFetchData } from '../actions/ItemsActions';
 
 class Article extends Component {
     constructor(props) {
