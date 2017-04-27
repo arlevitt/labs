@@ -19,12 +19,14 @@
 
 
 import * as actions from '../actions/ItemsActions'
+import * as types from '../reducers/ItemsTypes'
+
 
 describe('actions', () => {
     it('should create an action to add a todo', () => {
         const bool = true;
         const expectedAction = {
-            type: 'ITEMS_IS_LOADING',
+            type: types.ITEMS_IS_LOADING,
             isLoading: bool
         }
         expect(actions.itemsIsLoading(bool)).toEqual(expectedAction)

@@ -35,9 +35,9 @@ class App extends Component {
 
         // Every time the state changes, log it
         // Note that subscribe() returns a function for unregistering the listener
-        let unsubscribe = store.subscribe(() =>
-            console.log(store.getState())
-        );
+        // let unsubscribe = store.subscribe(() =>
+        //     console.log(store.getState())
+        // );
 
         // Dispatch some actions
         //store.dispatch(addArticle('add article called'));
@@ -46,7 +46,7 @@ class App extends Component {
         //console.log(store.getState());
 
         // Stop listening to state updates
-        unsubscribe()
+        //unsubscribe()
         //END STORE TSETS
     }
 

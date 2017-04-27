@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import * as types from '../reducers/ItemTypes'
+import * as types from '../reducers/ItemsTypes'
 
 export const rootUrl = 'https://jsonplaceholder.typicode.com';
 
@@ -13,10 +13,11 @@ export function fetchItemsRequest() {
     }
 }
 
-export function itemsHasErrored(bool) {
+export function itemsHasErrored(ex) {
     return {
         type: types.ITEMS_HAS_ERRORED,
-        hasErrored: bool
+        errorMessage: ex.toString(),
+        hasErrored: true
     };
 }
 export function itemsIsLoading(bool) {
@@ -26,14 +27,10 @@ export function itemsIsLoading(bool) {
     };
 }
 export function itemsFetchDataSuccess(body) {
-    console.log('BODY!: ' + body);
     var array = [];
     if(!Array.isArray(body) && !Array.isArray(body.items)) {
-        console.log('item is single');
         array.push(body);
     } else {
-        console.log('item is array');
-
         array = body;
     }
 
@@ -55,21 +52,20 @@ export function itemsFetchData2() {
 
 export function itemsFetchData(url) {
     return dispatch => {
-        //dispatch(itemsIsLoading(true));
         dispatch(fetchItemsRequest());
+        dispatch(itemsIsLoading(true));
         return fetch(url)
-            // .then((response) => {
-            //     if (!response.ok) {
-            //         throw Error(response.statusText);
-            //     }
-            //     dispatch(itemsIsLoading(false));
-            //     return response;
-            // })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                dispatch(itemsIsLoading(false));
+                return response;
+            })
             .then((response) => response.json())
             .then(json => dispatch(itemsFetchDataSuccess(json)))
             .catch(ex => {
-                console.log('ERROR: ' + ex.toString());
-                dispatch(itemsHasErrored(true))
+                dispatch(itemsHasErrored(ex))
             });
     };
 }
