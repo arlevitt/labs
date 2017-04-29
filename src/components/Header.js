@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default class Header extends Component {
     constructor(props) {
         super(props);
-    alert('yo');
+        alert('yo');
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
     }
 

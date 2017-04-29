@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import * as types from '../reducers/ItemsTypes'
+import * as types from '../constants/ItemsTypes'
 
 export const rootUrl = 'https://jsonplaceholder.typicode.com';
 
@@ -38,16 +38,6 @@ export function itemsFetchDataSuccess(body) {
         type: types.ITEMS_FETCH_DATA_SUCCESS,
         body: array
     };
-}
-
-export function itemsFetchData2() {
-    return dispatch => {
-        dispatch(fetchItemsRequest());
-        return fetch('http://example.com/posts')
-            .then(response => response.json())
-            .then(json => dispatch(itemsFetchDataSuccess(json.body)))
-            .catch(ex => dispatch(itemsHasErrored(ex)))
-    }
 }
 
 export function itemsFetchData(url) {

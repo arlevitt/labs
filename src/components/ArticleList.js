@@ -46,10 +46,10 @@ class ArticleList extends Component {
         return (
             <div>
                 {
-                    this.props.items.map(item => {
+                    this.props.items.map(el => {
                         return (
-                            <div key={item.id}>
-                                <Link to={`/articles/${item.id}`}>{item.title}</Link>
+                            <div key={el.id}>
+                                <Link to={`/articles/${el.id}`}>{el.title}</Link>
                             </div>
                         );
                     })
@@ -57,8 +57,7 @@ class ArticleList extends Component {
             </div>
         )
     }
-};
-
+}
 const mapStateToProps = (state) => {
     return {
         items: state.items,
