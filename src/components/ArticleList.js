@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { ApiUrls, itemsFetchData } from '../actions/ItemsActions';
+import { ApiUrls } from '../constants/Urls';
+import { itemsFetchData } from '../actions/ItemsActions';
 
 class ArticleList extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class ArticleList extends Component {
         )
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         items: state.items,

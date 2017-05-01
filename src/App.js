@@ -22,6 +22,7 @@ class App extends Component {
 
         this.state = {
             isLoggedIn: localStorage.getItem('isLoggedIn') === 'true' || false,
+            selectedTabId: localStorage.getItem('selectedTabId')!= null ? localStorage.getItem('selectedTabId') : '1',
             hasErrored: false,
             isLoading: false,
             items: null

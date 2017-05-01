@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ApiUrls } from '../constants/Urls';
+import { addLabs } from '../actions/LabsActions';
+
 
 import LabsInfusionInput from './LabsInfusionInput';
+
+const labsInputs = [
+    { type: 'date', name: 'date', label: 'Date', defaultValue: new Date().toISOString().substring(0, 10) },
+    { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
+    { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '8.0-17.5', infusionCheckbox: 'Received Transfusion' },
+    { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
+    { type: 'number', name: 'anc', label: 'Abs Neutrophils', range: '1.5-8.0', infusionCheckbox: 'Received Neupogen Shot' },
+    { type: 'number', name: 'magnesium', label: 'Magnesium', range: '1.5-2.5', infusionCheckbox: 'Received Infusion' },
+    { type: 'number', name: 'potassium', label: 'Potassium', range: '3.6-5.2', infusionCheckbox: 'Received Infusion' },
+];
 
 class Labs extends Component {
     constructor(props) {
@@ -12,9 +26,10 @@ class Labs extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleFieldChange(event) {
+    handleFieldChange(event, range) {
         const target = event.target;
         const name = target.name;
+
         let value = null;
         switch (target.type) {
             case ('checkbox'):
@@ -27,7 +42,6 @@ class Labs extends Component {
                 value = target.value;
         }
 
-
         this.setState({[name]: value}, function () {
             //alert(name + ' is now set to: ' + this.state.platelets);
         });
@@ -35,12 +49,9 @@ class Labs extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
-        // checks if login is successful
-            // if (true) {
-            //     this.props.onSubmit(true);
-            // }
+        this.props.addLabs(ApiUrls.LABS, this.state);
     }
+
     render() {
         return (
             <div id="login-form" className="container-fluid">
@@ -51,53 +62,23 @@ class Labs extends Component {
                         <div className="col-sm-10">
                             <h1>Clinic Labs Input</h1>
                         </div>
-                        <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                            <LabsInfusionInput  type="date"
-                                                name="date"
-                                                label="Date"
-                                                valueProperty={this.state.date || new Date().toISOString().substring(0, 10)}
-                                                onFieldChange={this.handleFieldChange}/>
-
-                            <LabsInfusionInput  type="number"
-                                                name="platelets"
-                                                label="Platelets"
-                                                valueProperty={this.state.platelets}
-                                                onFieldChange={this.handleFieldChange}
-                                                showInfusionCheckbox={'Received Platelets'} />
-
-                            <LabsInfusionInput  type="number"
-                                                name="hemoglobin"
-                                                label="Hemoglobin"
-                                                valueProperty={this.state.hemoglobin}
-                                                onFieldChange={this.handleFieldChange}
-                                                showInfusionCheckbox={'Received Transfusion'} />
-
-                            <LabsInfusionInput  type="number"
-                                                name="whitecount"
-                                                label="White Count"
-                                                valueProperty={this.state.whitecount}
-                                                onFieldChange={this.handleFieldChange} />
-
-                            <LabsInfusionInput  type="number"
-                                                name="anc"
-                                                label="Abs Neutrophils"
-                                                valueProperty={this.state.anc}
-                                                onFieldChange={this.handleFieldChange}
-                                                showInfusionCheckbox={'Neupogen Shot'} />
-
-                            <LabsInfusionInput  type="number"
-                                                name="magnesium"
-                                                label="Magnesium"
-                                                valueProperty={this.state.magnesium}
-                                                onFieldChange={this.handleFieldChange}
-                                                showInfusionCheckbox={'Received Infusion'} />
-
-                            <LabsInfusionInput  type="number"
-                                                name="potassium"
-                                                label="Potassium"
-                                                valueProperty={this.state.potassium}
-                                                onFieldChange={this.handleFieldChange}
-                                                showInfusionCheckbox={'Received Infusion'}/>
+                        <form id="labs-form" className="form-horizontal" onSubmit={this.handleSubmit}>
+                            {
+                                labsInputs.map(labsInput => {
+                                    return (
+                                        <LabsInfusionInput  key={labsInput.name}
+                                                            type={labsInput.type}
+                                                            name={labsInput.name}
+                                                            label={labsInput.label}
+                                                            valueProperty={labsInput.name}
+                                                            range={labsInput.range}
+                                                            defaultValue={labsInput.defaultValue}
+                                                            infusionCheckbox={labsInput.infusionCheckbox}
+                                                            onFieldChange={this.handleFieldChange}
+                                        />
+                                    );
+                                })
+                            }
 
                             <div className="form-group">
                                 <div className="col-sm-offset-2 col-sm-7 text-center">
@@ -113,5 +94,18 @@ class Labs extends Component {
     }
 };
 
-export default Labs;
-//export default connect(mapStateToProps, mapDispatchToProps)(Article);
+const mapStateToProps = (state) => {
+    return {
+        items: state.items,
+        hasErrored: state.itemsHasErrored,
+        isLoading: state.itemsIsLoading
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addLabs: (url, state) => dispatch(addLabs(url, state))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Labs);

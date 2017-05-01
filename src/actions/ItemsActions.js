@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import * as types from '../constants/ItemsTypes'
+import * as types from '../constants/RequestTypes'
 
 export const rootUrl = 'https://jsonplaceholder.typicode.com';
 

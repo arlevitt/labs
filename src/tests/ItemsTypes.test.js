@@ -1,4 +1,4 @@
-import * as types from '../constants/ItemsTypes'
+import * as types from '../constants/RequestTypes'
 import { items } from '../reducers/ItemsTypes'
 
 describe('todos reducer', () => {
