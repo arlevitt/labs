@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+import * as inputFieldUtils from '../utils/InputFieldUtils';
 
-class LabsInfusionInput extends Component {
+export const RangeCheckResults = {
+    LOW:'low',
+    HIGH: 'high',
+    GOOD: 'good',
+    UNCHECKED: 'unchecked'
+}
+
+class LabsInputComponent extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
 
-        this.isInRange = false;
+        this.rangeCheck = RangeCheckResults.UNCHECKED;
+        this.rangeClass = 'input-group-addon glyphicon glyphicon-sunglasses icon-transparent';
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
@@ -18,30 +28,25 @@ class LabsInfusionInput extends Component {
             return;
         }
 
-        const target = event.target;
-
-        let value = null;
-        switch (target.type) {
-            case ('number'):
-                value = parseFloat(target.value);
-                break;
-            default:
-                value = target.value;
-        }
-
+        var value = inputFieldUtils.getFieldValue(event);
         var parts = this.props.range.split('-');
         var min = parseFloat(parts[0]);
-        var max = parseFloat(parts[2]);
-
-        this.isInRange = ((value < min) || (value > max)) ? false : true;
-    }
-
-    getRangeClass() {
+        var max = parseFloat(parts[1]);
         var className = 'input-group-addon glyphicon ';
-        className += this.isInRange ? 'glyphicon-triangle-top icon-in-range' : 'glyphicon-triangle-bottom icon-out-of-range';
-        console.log(this.props.name + ' ' + this.isInRange);
-        console.log(className);
-        return className;
+
+        if (value < min) {
+            this.rangeCheck = RangeCheckResults.LOW;
+            this.rangeClass = className + 'glyphicon-triangle-bottom icon-out-of-range';
+        } else if (value > max) {
+            this.rangeCheck = RangeCheckResults.HIGH;
+            this.rangeClass = className + 'glyphicon-triangle-top icon-out-of-range';
+        } else if ((value >= min) && (value <= max)){
+            this.rangeCheck = RangeCheckResults.GOOD;
+            this.rangeClass = className + 'glyphicon-sunglasses icon-in-range';
+        } else {
+            this.rangeCheck = RangeCheckResults.UNCHECKED;
+            this.rangeClass = className + 'glyphicon-sunglasses icon-transparent';
+        }
     }
 
     render() {
@@ -67,7 +72,7 @@ class LabsInfusionInput extends Component {
                     />
                     {
                         this.props.type === 'number' ? (
-                            <div className={this.getRangeClass()}></div>
+                            <div className={this.rangeClass}></div>
                         ) : null
                     }
                 </div>
@@ -85,4 +90,4 @@ class LabsInfusionInput extends Component {
     }
 }
 
-export default LabsInfusionInput
+export default LabsInputComponent

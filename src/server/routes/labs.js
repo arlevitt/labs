@@ -1,9 +1,10 @@
-var express = require('express');
+//var express = require('express');
 var jwt = require('express-jwt');
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 var mongoose = require('mongoose');
 
-var Labs = mongoose.model('Labs');
+var Labs = mongoose.model('LabsModel');
 
 var baseUrl = '/api/labs';
 
@@ -25,6 +26,8 @@ module.exports = function(router) {
     });
 
     router.post(baseUrl, auth, function (req, res, next) {
+        console.log('got the post!');
+        return;
         var labs = new Labs(req.body);
         //abs.author = req.payload.username;
 

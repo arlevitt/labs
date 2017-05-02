@@ -1,9 +1,12 @@
 export function addLabs(url, state) {
+    console.log(url);
+    console.log(state);
     return dispatch => {
         //dispatch(fetchItemsRequest());
         fetch(url, {
             method: 'POST',
-            body: state
+            body: state,
+            //headers: { 'Authorization': 'Bearer ' + auth.getToken() }
         })
         .then((response) => {
             if (!response.ok) {

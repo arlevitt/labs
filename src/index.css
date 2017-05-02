@@ -40,6 +40,10 @@ body {
     color: red;
 }
 
+.icon-transparent {
+    color: transparent !important;
+}
+
 #labs-form .checkbox-inline {
     margin-left: 10px;
 }

@@ -12,7 +12,7 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import ArticleList from './components/ArticleList';
 import Article from './components/Article';
-import Labs from './components/Labs';
+import LabsInputForm from './components/LabsInputForm';
 
 const store = configureStore();
 
@@ -77,7 +77,7 @@ class App extends Component {
                                 isLoggedIn: {this.isLoggedIn().toString()}
                                 <Route exact={true} path="/" component={() => <ArticleList isLoggedIn={this.isLoggedIn()} />} />
                                 <Route path="/articles/:articleId?" component={(props, state, params) => <Article isLoggedIn={this.isLoggedIn()} {...props} />} />
-                                <Route path="/labs/:labId?" component={(props, state, params) => <Labs isLoggedIn={this.isLoggedIn()} {...props} />} />
+                                <Route path="/labs/:labId?" component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
                                 <Route path="/login" component={() => <Login isLoggedIn={this.isLoggedIn()} onSubmit={this.setIsLoggedIn} />} />
                             </div>
                         </div>

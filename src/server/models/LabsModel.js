@@ -10,4 +10,4 @@ var LabsSchema = new mongoose.Schema({
     potassium: Number
 });
 
-var LabsModel = mongoose.model('Labs', LabsSchema);
+var LabsModel = mongoose.model('LabsModel', LabsSchema);

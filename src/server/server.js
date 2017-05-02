@@ -1,19 +1,21 @@
 var express = require('express');
 var path = require('path');
- var logger = require('morgan');
- var cookieParser = require('cookie-parser');
- var bodyParser = require('body-parser');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 //var favicon = require('serve-favicon');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 //var passport = require('passport');
-
-//mongoose.connect('mongodb://localhost/news');
 
 require('./models/LabsModel');
 
-var labs = require('./routes/labs');
+mongoose.connect('mongodb://localhost/labs');
 
 var app = express();
+
+ var labs = require('./routes/labs');
+ labs(app);
+ app.use('/api/labs', labs);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,8 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(passport.initialize());
-
-app.use('/api/labs', labs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,6 +51,10 @@ app.use(function(err, req, res, next) {
 var server = app.listen(3001, function () {
     var port = server.address().port;
     console.log('Example app listening at port %s', port);
+});
+
+app.get('/', function (req, res) {
+    res.status(200).send('ok');
 });
 
 module.exports = server;
