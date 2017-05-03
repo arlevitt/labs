@@ -10,7 +10,6 @@ var Labs = mongoose.model('Labs');
 var baseUrl = '/api/labs';
 
 module.exports = function(router) {
-    //router.use(cors({origin: 'http://localhost:3001'}));
     // router.get(baseUrl, function (req, res, next) {
     //     var queryCallback = function (err, posts) {
     //         if (err) {
@@ -27,20 +26,17 @@ module.exports = function(router) {
     //     }
     // });
 
-    // router.post(baseUrl, /*auth,*/ function (req, res, next) {
-    //     console.log('got the post!');
-    //     console.log(req.body);
-    //     var labs = new Labs(req.body);
-    //     //abs.author = req.payload.username;
-    //     console.log(labs);
-    //     res.json(labs);
-    //
-    //     // labs.save(function (err, labs) {
-    //     //     if (err) {
-    //     //         return next(err);
-    //     //     }
-    //     //
-    //     //     res.json(labs);
-    //     // });
-    // });
+    router.post(baseUrl, /*auth,*/ function (req, res, next) {
+        console.log('got the post!');
+        console.log(req.body);
+        var labs = new Labs(req.body);
+
+        labs.save(function (err, labs) {
+            if (err) {
+                return next(err);
+            }
+
+            res.json(labs);
+        });
+    });
 }

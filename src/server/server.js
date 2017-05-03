@@ -1,22 +1,18 @@
-console.log('server!!!')
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-//var favicon = require('serve-favicon');
 var mongoose = require('mongoose');
+//var favicon = require('serve-favicon');
 //var passport = require('passport');
 
-//mongoose.connect('mongodb://localhost/labs');
+mongoose.connect('mongodb://localhost/labs-tracker');
 
 var app = express();
 
 require('./models/LabsModel');
-// var labs = require('./routes/labs');
-// labs(app);
-// app.use('/api/labs', labs);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,14 +28,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({origin: 'http://localhost:3000'}));
 //app.use(passport.initialize());
 
+var labs = require('./routes/labs');
+labs(app);
+app.use('/api/labs', labs);
+
 app.get('/', function (req, res) {
     res.status(200).send('ok');
-});
-
-app.post('/api/labs', function (req, res) {
-    console.log('got the post!');
-    console.log(req.body);
-    res.status(200).send('ok2');
 });
 
 // catch 404 and forward to error handler

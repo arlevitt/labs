@@ -1,8 +1,6 @@
 export function addLabs(url, state) {
     console.log(url);
     console.log(JSON.stringify(state));
-    console.log(state);
-    var string = JSON.stringify(state);
     return dispatch => {
         //dispatch(fetchItemsRequest());
         fetch(url, {
@@ -11,7 +9,7 @@ export function addLabs(url, state) {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type':'application/json'
             },
-            body: string,
+            body: JSON.stringify(state),
         })
         .then((response) => {
             console.log(response);
