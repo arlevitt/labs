@@ -1,14 +1,20 @@
 export function addLabs(url, state) {
     console.log(url);
+    console.log(JSON.stringify(state));
     console.log(state);
+    var string = JSON.stringify(state);
     return dispatch => {
         //dispatch(fetchItemsRequest());
         fetch(url, {
             method: 'POST',
-            body: state,
-            //headers: { 'Authorization': 'Bearer ' + auth.getToken() }
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type':'application/json'
+            },
+            body: string,
         })
         .then((response) => {
+            console.log(response);
             if (!response.ok) {
                 throw Error(response.statusText);
             }

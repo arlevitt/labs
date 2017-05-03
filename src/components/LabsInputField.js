@@ -8,7 +8,7 @@ export const RangeCheckResults = {
     UNCHECKED: 'unchecked'
 }
 
-class LabsInputComponent extends Component {
+class LabsInputField extends Component {
     constructor(props) {
         super(props);
 
@@ -16,6 +16,7 @@ class LabsInputComponent extends Component {
         this.rangeClass = 'input-group-addon glyphicon glyphicon-sunglasses icon-transparent';
 
         this.handleChange = this.handleChange.bind(this);
+        //this.defaultValue = this.props.type === 'date' && this.props.value === undefined ? new Date().toISOString().substring(0, 10) : this.props[this.props.valueProperty]
     }
 
     handleChange(event) {
@@ -90,4 +91,4 @@ class LabsInputComponent extends Component {
     }
 }
 
-export default LabsInputComponent
+export default LabsInputField

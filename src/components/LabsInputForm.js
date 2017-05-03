@@ -4,10 +4,10 @@ import { ApiUrls } from '../constants/Urls';
 import { addLabs } from '../actions/LabsActions';
 import * as inputFieldUtils from '../utils/InputFieldUtils';
 
-import LabsInputComponent from './LabsInputComponent';
+import LabsInputField from './LabsInputField';
 
 const labsInputs = [
-    { type: 'date', name: 'date', label: 'Date', defaultValue: new Date().toISOString().substring(0, 10) },
+    { type: 'date', name: 'date', label: 'Date', value: new Date().toISOString().substring(0, 10) },
     { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
     { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
     { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
@@ -53,14 +53,10 @@ class LabsInputForm extends Component {
                             {
                                 labsInputs.map(labsInput => {
                                     return (
-                                        <LabsInputComponent  key={labsInput.name}
-                                                            type={labsInput.type}
-                                                            name={labsInput.name}
-                                                            label={labsInput.label}
+                                        <LabsInputField {...labsInput}
+                                                            key={labsInput.name}
                                                             valueProperty={labsInput.name}
-                                                            range={labsInput.range}
                                                             defaultValue={labsInput.defaultValue}
-                                                            infusionCheckbox={labsInput.infusionCheckbox}
                                                             onFieldChange={this.handleFieldChange}
                                         />
                                     );
