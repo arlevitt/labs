@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
-import { itemsFetchData } from '../actions/ItemsActions';
+import { getLabs } from '../actions/LabsActions';
 
-class ArticleList extends Component {
+class LabsHistory extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             hasErrored: false,
             isLoading: false,
-            items: null
+            labs: null
         };
     }
 
@@ -20,7 +20,7 @@ class ArticleList extends Component {
             return;
         }
 
-        this.props.itemsFetchData(ApiUrls.POSTS);
+        this.props.labsFetchData(ApiUrls.LABS);
     }
 
     render() {
@@ -30,13 +30,13 @@ class ArticleList extends Component {
             )
         }
 
-        if (!this.props.items) {
+        if (!this.props.labs) {
             return (
                 <div className="article-preview">Loading...</div>
             );
         }
 
-        if (this.props.items.length === 0) {
+        if (this.props.labs.length === 0) {
             return (
                 <div className="article-preview">
                     No articles are here... yet.
@@ -47,22 +47,22 @@ class ArticleList extends Component {
         return (
             <div>
                 {
-                    this.props.items.map((el, index) => {
+                    this.props.labs.map((el, index) => {
                         return (
                             <div key={index}>
-                                <Link to={`/articles/${el.id}`}>{el.title}</Link>
+                               dd{el.magnesium}
                             </div>
                         );
                     })
                 }
             </div>
         )
-    }
+    };
 }
 
 const mapStateToProps = (state) => {
     return {
-        items: state.items,
+        labs: state.labs,
         hasErrored: state.itemsHasErrored,
         isLoading: state.itemsIsLoading
     };
@@ -70,8 +70,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        itemsFetchData: (url) => dispatch(itemsFetchData(url))
+        labsFetchData: (url) => dispatch(getLabs(url))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);
+export default connect(mapStateToProps, mapDispatchToProps)(LabsHistory);

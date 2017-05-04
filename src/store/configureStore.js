@@ -4,7 +4,8 @@ import { createLogger } from 'redux-logger'
 import rootReducer from '../reducers';
 
 const loggerMiddleware = createLogger({
-    predicate: (getState, action) => action.type !== 'ITEMS_IS_LOADING'
+    predicate: (getState, action) => action.type === 'LABS_FETCH_DATA_SUCCESS'
+    //collapsed: (getState, action, logEntry) => !logEntry.error
 });
 
 export default function configureStore(initialState) {

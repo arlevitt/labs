@@ -7,7 +7,7 @@ import * as inputFieldUtils from '../utils/InputFieldUtils';
 import LabsInputField from './LabsInputField';
 
 const labsInputs = [
-    { type: 'date', name: 'date', label: 'Date', value: new Date().toISOString().substring(0, 10) },
+    { type: 'date', name: 'date', label: 'Date', isRequired: true, value: new Date().toISOString().substring(0, 10) },
     { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
     { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
     { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
@@ -78,8 +78,10 @@ class LabsInputForm extends Component {
 };
 
 const mapStateToProps = (state) => {
+    console.log('mapStateToProps 1');
+    console.log('length: ' + state.labs.length);
     return {
-        items: state.items,
+        labs: state.labs,
         hasErrored: state.itemsHasErrored,
         isLoading: state.itemsIsLoading
     };

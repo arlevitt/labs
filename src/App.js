@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Footer from './components/Footer';
 import ArticleList from './components/ArticleList';
 import Article from './components/Article';
+import LabsHistory from './components/LabsHistory';
 import LabsInputForm from './components/LabsInputForm';
 
 const store = configureStore();
@@ -25,7 +26,8 @@ class App extends Component {
             selectedTabId: localStorage.getItem('selectedTabId')!= null ? localStorage.getItem('selectedTabId') : '1',
             hasErrored: false,
             isLoading: false,
-            items: null
+            items: null,
+            labs: null
         };
 
         this.setIsLoggedIn = this.setIsLoggedIn.bind(this);
@@ -75,9 +77,13 @@ class App extends Component {
                         <div className="row full-height">
                             <div id="main" className="col-md-10">
                                 isLoggedIn: {this.isLoggedIn().toString()}
-                                <Route exact={true} path="/" component={() => <ArticleList isLoggedIn={this.isLoggedIn()} />} />
+                                <Route path="/" exact={true} component={() => <ArticleList isLoggedIn={this.isLoggedIn()} />} />
+
                                 <Route path="/articles/:articleId?" component={(props, state, params) => <Article isLoggedIn={this.isLoggedIn()} {...props} />} />
-                                <Route path="/labs/:labId?" component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
+
+                                <Route path="/labs/:labId?" exact={true} component={(props, state, params) => <LabsHistory isLoggedIn={this.isLoggedIn()} {...props} />} />
+                                <Route path="/addLabs" exact={true} component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
+
                                 <Route path="/login" component={() => <Login isLoggedIn={this.isLoggedIn()} onSubmit={this.setIsLoggedIn} />} />
                             </div>
                         </div>

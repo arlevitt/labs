@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var LabsSchema = new mongoose.Schema({
-    date: Date,
+    date: { type: Date, required: true },
     platelets: Number,
     hemoglobin: Number,
-    whitecount: {type: Number, default: 0},
+    whitecount: { type: Number, default: 0 },
     anc: Number,
     magnesium: Number,
     potassium: Number
