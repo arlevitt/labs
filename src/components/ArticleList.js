@@ -5,16 +5,6 @@ import { ApiUrls } from '../constants/Urls';
 import { itemsFetchData } from '../actions/ItemsActions';
 
 class ArticleList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            hasErrored: false,
-            isLoading: false,
-            items: null
-        };
-    }
-
     componentWillMount() {
         if (!this.props.isLoggedIn) {
             return;

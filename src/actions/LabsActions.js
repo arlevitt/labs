@@ -34,7 +34,7 @@ export function addLabs(url, state) {
 
 export function labsFetchDataSuccess(body) {
     var array = [];
-    if(!Array.isArray(body) && !Array.isArray(body.items)) {
+    if(!Array.isArray(body)) {
         array.push(body);
     } else {
         array = body;
@@ -46,7 +46,7 @@ export function labsFetchDataSuccess(body) {
     };
 }
 
-export function getLabs(url) {
+export function labsFetchData(url) {
     return dispatch => {
         //dispatch(fetchItemsRequest());
         return fetch(url)
@@ -61,7 +61,6 @@ export function getLabs(url) {
             .then((response) => response.json())
             .then(json => dispatch(labsFetchDataSuccess(json)))
             .catch(ex => {
-                console.log(ex);
                 //dispatch(itemsHasErrored(ex))
             });
     };

@@ -8,31 +8,6 @@ export const RangeCheckResults = {
     UNCHECKED: 'unchecked'
 };
 
-// Object.assign(Validation.rules, {
-//     // Key name maps the rule
-//     required: {
-//         // Function to validate value
-//         // NOTE: value might be a number -> force to string
-//         rule: value => {
-//             return value.toString().trim();
-//         },
-//         // Function to return hint
-//         // You may use current value to inject it in some way to the hint
-//         hint: value => {
-//             return <span className='form-error is-visible'>Required</span>
-//         }
-//     },
-//     date: {
-//         // Example usage with external 'validator'
-//         rule: value => {
-//             return validator.isEmpty(value);
-//         },
-//         hint: value => {
-//             return <span className='form-error is-visible'>{value} must be set to a valid date.</span>
-//         }
-//     },
-// });
-
 class LabsInputField extends Component {
     constructor(props) {
         super(props);

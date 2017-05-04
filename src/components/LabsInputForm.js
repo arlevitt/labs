@@ -20,7 +20,11 @@ class LabsInputForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            hasErrored: false,
+            isLoading: false,
+            labs: null
+        };
 
         this.handleFieldChange = this.handleFieldChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -81,9 +85,7 @@ const mapStateToProps = (state) => {
     console.log('mapStateToProps 1');
     console.log('length: ' + state.labs.length);
     return {
-        labs: state.labs,
-        hasErrored: state.itemsHasErrored,
-        isLoading: state.itemsIsLoading
+        labs: state.labs
     };
 };
 

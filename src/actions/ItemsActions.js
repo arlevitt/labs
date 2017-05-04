@@ -28,7 +28,7 @@ export function itemsIsLoading(bool) {
 }
 export function itemsFetchDataSuccess(body) {
     var array = [];
-    if(!Array.isArray(body) && !Array.isArray(body.items)) {
+    if(!Array.isArray(body)) {
         array.push(body);
     } else {
         array = body;
