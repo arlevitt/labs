@@ -81,8 +81,9 @@ class App extends Component {
 
                                 <Route path="/articles/:articleId?" component={(props, state, params) => <Article isLoggedIn={this.isLoggedIn()} {...props} />} />
 
-                                <Route path="/labs/:labId?" exact={true} component={(props, state, params) => <LabsHistory isLoggedIn={this.isLoggedIn()} {...props} />} />
-                                <Route path="/addLabs" exact={true} component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
+                                <Route path="/labs" exact={true} component={(props, state, params) => <LabsHistory isLoggedIn={this.isLoggedIn()} {...props} />} />
+                                <Route path="/labs/create" exact={true} component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
+                                <Route path="/labs/edit/:labsId" exact={true} component={(props, state, params) => <LabsInputForm isLoggedIn={this.isLoggedIn()} {...props} />} />
 
                                 <Route path="/login" component={() => <Login isLoggedIn={this.isLoggedIn()} onSubmit={this.setIsLoggedIn} />} />
                             </div>

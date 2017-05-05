@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
 import { labsFetchData } from '../actions/LabsActions';
+import moment from 'moment';
 
 class LabsHistory extends Component {
     componentWillMount() {
@@ -40,7 +41,11 @@ class LabsHistory extends Component {
                     this.props.labs.map((el, index) => {
                         return (
                             <div key={index}>
-                               dd{el.date}
+                                dd{el.date}
+                                <br/>Labs for:
+                                <Link to={`/labs/edit/${el._id}`}>
+                                    {moment(el.date).format('MM/DD/YYYY')}
+                                </Link>
                             </div>
                         );
                     })
@@ -51,7 +56,7 @@ class LabsHistory extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('state labs:' + state.labs.length);
+    console.log('mapStateToProps labs');
     return {
         labs: state.labs,
     };

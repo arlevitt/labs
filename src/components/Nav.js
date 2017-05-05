@@ -40,7 +40,7 @@ export default class Nav extends Component {
                 <ul className="nav nav-pills nav-stacked">
                     <Tab id="1" text="Article List" link="/" onActiveTab={ this.setActiveTab.bind(this, "1") } isActive={this.isActive("1")}/>
                     <Tab id="2" text="Labs History" link="/labs" onActiveTab={ this.setActiveTab.bind(this, "2") } isActive={this.isActive("2")}/>
-                    <Tab id="3" text="Labs Input" link="/addLabs" onActiveTab={ this.setActiveTab.bind(this, "3") } isActive={this.isActive("3")}/>
+                    <Tab id="3" text="Create Labs" link="/labs/create" onActiveTab={ this.setActiveTab.bind(this, "3") } isActive={this.isActive("3")}/>
                 </ul>
             </div>
         );

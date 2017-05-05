@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import moment from 'moment';
+
 import * as inputFieldUtils from '../utils/InputFieldUtils';
 
 export const RangeCheckResults = {
@@ -12,24 +14,44 @@ class LabsInputField extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            value: props.defaultValue
+        };
+
         this.rangeCheck = RangeCheckResults.UNCHECKED;
         this.rangeClass = 'input-group-addon glyphicon glyphicon-sunglasses icon-transparent';
 
         this.handleChange = this.handleChange.bind(this);
-        //this.defaultValue = this.props.type === 'date' && this.props.value === undefined ? new Date().toISOString().substring(0, 10) : this.props[this.props.valueProperty]
+    }
+
+    componentWillReceiveProps(newProps) {
+        var value = newProps.defaultValue;
+        if (this.props.type === 'date') {
+            value = moment(value).format('YYYY-MM-DD');
+        }
+        this.setState({value: value});
+        this.checkRange(value);
     }
 
     handleChange(event) {
-        this.props.onFieldChange(event, this.props.range);
-        this.checkRange(event);
+        // old change before default value worked
+        //this.props.onFieldChange(event, this.props.range);
+        //this.checkRange(event);
+
+        var value = inputFieldUtils.getFieldValue(event);
+        this.setState({value: value}, function () {
+        });
+
+        this.checkRange(value);
     }
 
-    checkRange(event) {
-        if (!this.props.range) {
+    //checkRange(event) {
+    checkRange(value) {
+        if (!this.props.range || value === '') {
             return;
         }
 
-        var value = inputFieldUtils.getFieldValue(event);
+        //var value = inputFieldUtils.getFieldValue(event);
         var parts = this.props.range.split('-');
         var min = parseFloat(parts[0]);
         var max = parseFloat(parts[1]);
@@ -51,15 +73,6 @@ class LabsInputField extends Component {
     }
 
     render() {
-        // if (this.props.name == 'date') {
-        //     alert(this.props.name + ' ' + this.props.defaultValue);
-        // }
-
-        // if (this.props.defaultValue) {
-        //     alert(this.props.defaultValue);
-        //     this.props[this.props.valueProperty] = this.props.defaultValue;
-        // }
-
         return <div>
             <div className="form-inline form-group">
                 <label className="col-sm-3 control-label">{this.props.label}</label>
@@ -68,7 +81,7 @@ class LabsInputField extends Component {
                             type={this.props.type}
                             name={this.props.name}
                             placeholder={this.props.range ? "Range: " + this.props.range : this.props.label}
-                            value={this.props[this.props.valueProperty]}
+                            value={this.state.value}
                             onChange={this.handleChange}
                             required={this.props.isRequired || false}
                     />
@@ -92,4 +105,4 @@ class LabsInputField extends Component {
     }
 }
 
-export default LabsInputField
+export default LabsInputField;

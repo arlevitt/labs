@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
-import { addLabs } from '../actions/LabsActions';
-import * as inputFieldUtils from '../utils/InputFieldUtils';
+import { addLabs, labsFetchData, labsClearData } from '../actions/LabsActions';
 
 import LabsInputField from './LabsInputField';
 
 const labsInputs = [
-    { type: 'date', name: 'date', label: 'Date', isRequired: true, value: new Date().toISOString().substring(0, 10) },
+    { type: 'date', name: 'date', label: 'Date', isRequired: true },
     { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
     { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
     { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
@@ -20,22 +19,19 @@ class LabsInputForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            hasErrored: false,
-            isLoading: false,
-            labs: null
-        };
-
-        this.handleFieldChange = this.handleFieldChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleFieldChange(event) {
-        var name = event.target.name;
-        var value = inputFieldUtils.getFieldValue(event);
-        this.setState({[name]: value}, function () {
-            //alert(name + ' is now set to: ' + this.state[name]);
-        });
+    componentWillMount() {
+        if (!this.props.isLoggedIn) {
+            return;
+        }
+
+        if (this.props.match.params.labsId) {
+            this.props.fetchData(ApiUrls.LABS + '/' + this.props.match.params.labsId);
+        } else {
+            this.props.clearData();
+        }
     }
 
     handleSubmit(event) {
@@ -44,6 +40,7 @@ class LabsInputForm extends Component {
     }
 
     render() {
+        var labsObj = this.props.labs && this.props.labs[0] != undefined ? this.props.labs[0] : {};
         return (
             <div id="login-form" className="container-fluid">
                 <div className="row">
@@ -60,13 +57,11 @@ class LabsInputForm extends Component {
                                         <LabsInputField {...labsInput}
                                                             key={labsInput.name}
                                                             valueProperty={labsInput.name}
-                                                            defaultValue={labsInput.defaultValue}
-                                                            onFieldChange={this.handleFieldChange}
+                                                            defaultValue={labsObj[labsInput.name] || ''}
                                         />
                                     );
                                 })
                             }
-
                             <div className="form-group">
                                 <div className="col-sm-offset-2 col-sm-7 text-center">
                                     <button type="submit" className="btn btn-primary">Submit Results</button>
@@ -82,8 +77,7 @@ class LabsInputForm extends Component {
 };
 
 const mapStateToProps = (state) => {
-    console.log('mapStateToProps 1');
-    console.log('length: ' + state.labs.length);
+    console.log('mapStateToProps labs');
     return {
         labs: state.labs
     };
@@ -91,7 +85,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addLabs: (url, state) => dispatch(addLabs(url, state))
+        addLabs: (url, state) => dispatch(addLabs(url, state)),
+        fetchData: (url) => dispatch(labsFetchData(url)),
+        clearData: () => dispatch(labsClearData())
     };
 };
 

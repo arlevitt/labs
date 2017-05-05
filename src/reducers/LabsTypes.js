@@ -22,6 +22,8 @@ export function labs(state = initialState, action) {
             ]
         case types.LABS_FETCH_DATA_SUCCESS:
             return action.body;
+        case types.LABS_CLEAR_DATA:
+            return action.body;
         default:
             return state;
     }

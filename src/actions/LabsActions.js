@@ -23,8 +23,7 @@ export function addLabs(url, state) {
             return response;
         })
         .then((response) => response.json())
-        //.then(json => dispatch(itemsFetchDataSuccess(json)))
-        .then(json => alert(json))
+        .then(json => dispatch(labsFetchDataSuccess(json)))
         .catch(ex => {
             //dispatch(itemsHasErrored(ex))
         });
@@ -64,4 +63,11 @@ export function labsFetchData(url) {
                 //dispatch(itemsHasErrored(ex))
             });
     };
+}
+
+export function labsClearData(body) {
+    return {
+        type: types.LABS_CLEAR_DATA,
+        body: []
+    }
 }
