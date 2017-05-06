@@ -27,7 +27,8 @@ class App extends Component {
             hasErrored: false,
             isLoading: false,
             items: null,
-            labs: null
+            labsHistory: null,
+            currentLabs: null
         };
 
         this.setIsLoggedIn = this.setIsLoggedIn.bind(this);

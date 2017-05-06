@@ -6,12 +6,19 @@ import { labsFetchData } from '../actions/LabsActions';
 import moment from 'moment';
 
 class LabsHistory extends Component {
-    componentWillMount() {
+    // constructor(props) {
+    //     super(props);
+    //
+    //     this.props.dispatch(labsFetchData(ApiUrls.LABS));
+    // }
+
+    componentDidMount() {
         if (!this.props.isLoggedIn) {
             return;
         }
 
-        this.props.labsFetchData(ApiUrls.LABS);
+        //this.props.labsFetchData(ApiUrls.LABS);
+        this.props.dispatch(labsFetchData(ApiUrls.LABS));
     }
 
     render() {
@@ -21,13 +28,13 @@ class LabsHistory extends Component {
             )
         }
 
-        if (!this.props.labs) {
+        if (!this.props.labsHistory) {
             return (
                 <div className="article-preview">Loading...</div>
             );
         }
 
-        if (this.props.labs.length === 0) {
+        if (this.props.labsHistory.length === 0) {
             return (
                 <div className="article-preview">
                     No articles are here... yet.
@@ -38,7 +45,7 @@ class LabsHistory extends Component {
         return (
             <div>
                 {
-                    this.props.labs.map((el, index) => {
+                    this.props.labsHistory.map((el, index) => {
                         return (
                             <div key={index}>
                                 dd{el.date}
@@ -56,16 +63,10 @@ class LabsHistory extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('mapStateToProps labs');
+    console.log('mapStateToProps labsHistory');
     return {
-        labs: state.labs,
+        labsHistory: state.labsReducer.labsHistory,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        labsFetchData: (url) => dispatch(labsFetchData(url))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LabsHistory);
+export default connect(mapStateToProps)(LabsHistory);
