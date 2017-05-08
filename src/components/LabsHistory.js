@@ -6,18 +6,11 @@ import { labsFetchData } from '../actions/LabsActions';
 import moment from 'moment';
 
 class LabsHistory extends Component {
-    // constructor(props) {
-    //     super(props);
-    //
-    //     this.props.dispatch(labsFetchData(ApiUrls.LABS));
-    // }
-
     componentDidMount() {
         if (!this.props.isLoggedIn) {
             return;
         }
 
-        //this.props.labsFetchData(ApiUrls.LABS);
         this.props.dispatch(labsFetchData(ApiUrls.LABS));
     }
 

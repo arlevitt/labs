@@ -38,7 +38,7 @@ function labsFetchSuccess(body) {
     };
 }
 
-export function addLabs(url, state) {
+export function labsSave(url, state) {
     console.log(url);
     console.log(JSON.stringify(state));
     return dispatch => {
