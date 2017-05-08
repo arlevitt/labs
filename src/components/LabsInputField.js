@@ -6,27 +6,23 @@ class LabsInputField extends Component {
     constructor(props) {
         super(props);
 
-        this.value = '';
         this.rangeClass = 'input-group-addon glyphicon glyphicon-sunglasses icon-transparent';
 
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
-        var value = newProps.defaultValue;
+        var value = newProps.value;
         if (this.props.type === 'date') {
             value = moment(value).format('YYYY-MM-DD');
         }
 
-        this.value = value;
         this.setState({value: value});
         this.checkRange(value);
     }
 
     handleChange(event) {
         this.props.onFieldChange(event);
-        this.value = inputFieldUtils.getFieldValue(event);
-        this.checkRange(this.value);
     }
 
     checkRange(value) {
@@ -59,7 +55,7 @@ class LabsInputField extends Component {
                             type={this.props.type}
                             name={this.props.name}
                             placeholder={this.props.range ? "Range: " + this.props.range : this.props.label}
-                            value={this.value}
+                            value={this.props.value}
                             onChange={this.handleChange}
                             required={this.props.isRequired || false}
                     />

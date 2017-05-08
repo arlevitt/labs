@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
-import { labsFetchData} from '../actions/LabsActions';
+import { labsFetchData, labsSave} from '../actions/LabsActions';
 import * as inputFieldUtils from '../utils/InputFieldUtils';
 
 import LabsInputField from './LabsInputField';
@@ -20,9 +20,7 @@ class LabsInputForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            currentLabs: null
-        };
+        this.state = {};
 
         this.handleFieldChange = this.handleFieldChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,6 +36,15 @@ class LabsInputForm extends Component {
         }
     }
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.currentLabs) {
+            for (var property in newProps.currentLabs) {
+                if (newProps.currentLabs.hasOwnProperty(property)) {
+                    this.setState({[property]: newProps.currentLabs[property]});
+                }
+            }
+        }
+    }
 
     handleFieldChange(event) {
         const name = event.target.name;
@@ -51,9 +58,9 @@ class LabsInputForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if (this.getLabsObj()._id) {
-            this.props.updateLabs(ApiUrls.LABS + '/' + this.getLabsObj()._id, this.state);
+            this.props.dispatch(labsSave(ApiUrls.LABS + '/' + this.getLabsObj()._id, this.state));
         } else {
-            this.props.addLabs(ApiUrls.LABS, this.state);
+            this.props.dispatch(labsSave(ApiUrls.LABS, this.state));
         }
     }
 
@@ -62,7 +69,6 @@ class LabsInputForm extends Component {
     }
 
     render() {
-        var labsObj = this.getLabsObj();
         return (
             <div id="login-form" className="container-fluid">
                 <div className="row">
@@ -78,9 +84,8 @@ class LabsInputForm extends Component {
                                     return (
                                         <LabsInputField {...labsInput}
                                                             key={labsInput.name}
-                                                            valueProperty={labsInput.name}
+                                                            value={this.state[labsInput.name] || ''}
                                                             onFieldChange={this.handleFieldChange}
-                                                            defaultValue={labsObj[labsInput.name] || ''}
                                         />
                                     );
                                 })
