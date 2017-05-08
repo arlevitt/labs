@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
-import { labsFetchData, labsSave} from '../actions/LabsActions';
+import { labsFetchData, labsAdd, labsUpdate} from '../actions/LabsActions';
+import moment from 'moment';
 import * as inputFieldUtils from '../utils/InputFieldUtils';
 
 import LabsInputField from './LabsInputField';
 
 const labsInputs = [
-    // { type: 'date', name: 'date', label: 'Date', isRequired: true },
-    // { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
-    // { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
-    // { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
-    // { type: 'number', name: 'anc', label: 'Abs Neutrophils', range: '1.5-8.0', infusionCheckbox: 'Received Neupogen Shot' },
+    { type: 'date', name: 'date', label: 'Date', isRequired: true },
+    { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
+    { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
+    { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
+    { type: 'number', name: 'anc', label: 'Abs Neutrophils', range: '1.5-8.0', infusionCheckbox: 'Received Neupogen Shot' },
     { type: 'number', name: 'magnesium', label: 'Magnesium', range: '1.5-2.5', infusionCheckbox: 'Received Infusion' },
     { type: 'number', name: 'potassium', label: 'Potassium', range: '3.6-5.2', infusionCheckbox: 'Received Infusion' },
 ];
@@ -58,14 +59,23 @@ class LabsInputForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if (this.getLabsObj()._id) {
-            this.props.dispatch(labsSave(ApiUrls.LABS + '/' + this.getLabsObj()._id, this.state));
+            this.props.dispatch(labsUpdate(ApiUrls.LABS + '/' + this.getLabsObj()._id, this.state));
         } else {
-            this.props.dispatch(labsSave(ApiUrls.LABS, this.state));
+            this.props.dispatch(labsAdd(ApiUrls.LABS, this.state));
         }
     }
 
     getLabsObj() {
         return this.props.currentLabs || {};
+    }
+
+    getFormattedValue(propertyName, fieldType) {
+        var value = this.state[propertyName];
+        if (fieldType === 'date' && value) {
+            value = moment(value).format('YYYY-MM-DD');
+        }
+
+        return value;
     }
 
     render() {
@@ -84,7 +94,7 @@ class LabsInputForm extends Component {
                                     return (
                                         <LabsInputField {...labsInput}
                                                             key={labsInput.name}
-                                                            value={this.state[labsInput.name] || ''}
+                                                            value={this.getFormattedValue(labsInput.name, labsInput.type) || ''}
                                                             onFieldChange={this.handleFieldChange}
                                         />
                                     );

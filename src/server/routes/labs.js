@@ -62,4 +62,19 @@ module.exports = function(router) {
             res.json(labs);
         });
     });
+
+    router.put(baseUrl + '/:labs', /*auth,*/ function (req, res, next) {
+        console.log('got the put!');
+        console.log(req.body);
+
+        Labs.findByIdAndUpdate(req.body._id, req.body, {new: true, upsert: true, setDefaultsOnInsert: true}, function (err, updatedLabs) {
+            console.log(updatedLabs);
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+
+            res.json(updatedLabs);
+        });
+    });
 }

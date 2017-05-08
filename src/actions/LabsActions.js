@@ -38,42 +38,11 @@ function labsFetchSuccess(body) {
     };
 }
 
-export function labsSave(url, state) {
-    console.log(url);
-    console.log(JSON.stringify(state));
+function labsSave(url, state, httpMethod) {
     return dispatch => {
         //dispatch(fetchItemsRequest());
         fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(state),
-        })
-        .then((response) => {
-            console.log(response);
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            //dispatch(itemsIsLoading(false));
-            return response;
-        })
-        .then((response) => response.json())
-        .then(json => dispatch(labsFetchDataSuccess(json)))
-        .catch(ex => {
-            //dispatch(itemsHasErrored(ex))
-        });
-    };
-}
-
-export function updateLabs(url, state) {
-    console.log(url);
-    console.log(JSON.stringify(state));
-    return dispatch => {
-        //dispatch(fetchItemsRequest());
-        fetch(url, {
-            method: 'PUT',
+            method: httpMethod,
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
@@ -93,7 +62,19 @@ export function updateLabs(url, state) {
             .catch(ex => {
                 //dispatch(itemsHasErrored(ex))
             });
-    };
+    }
+}
+
+export function labsAdd(url, state) {
+    console.log(url);
+    console.log(JSON.stringify(state));
+    return labsSave(url, state, 'POST')
+}
+
+export function labsUpdate(url, state) {
+    console.log(url);
+    console.log(JSON.stringify(state));
+    return labsSave(url, state, 'PUT');
 }
 
 export function labsFetchDataSuccess(body) {

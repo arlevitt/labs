@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import * as inputFieldUtils from '../utils/InputFieldUtils';
 
 class LabsInputField extends Component {
     constructor(props) {
@@ -13,10 +11,6 @@ class LabsInputField extends Component {
 
     componentWillReceiveProps(newProps) {
         var value = newProps.value;
-        if (this.props.type === 'date') {
-            value = moment(value).format('YYYY-MM-DD');
-        }
-
         this.setState({value: value});
         this.checkRange(value);
     }
