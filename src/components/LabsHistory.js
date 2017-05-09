@@ -26,7 +26,6 @@ class LabsHistory extends Component {
                 <div className="article-preview">Loading...</div>
             );
         }
-
         if (this.props.labsHistory.length === 0) {
             return (
                 <div className="article-preview">

@@ -2,12 +2,12 @@ import fetch from 'isomorphic-fetch';
 import * as types from '../constants/RequestTypes'
 
 export function labsFetchData(url) {
-    console.log(url);
+    //console.log(url);
     return dispatch => {
         dispatch(labsFetchRequest());
         fetch(url)
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
@@ -16,7 +16,7 @@ export function labsFetchData(url) {
             })
             .then((response) => response.json())
             .then(json => {
-                console.log(json);
+                //console.log(json);
                 dispatch(labsFetchSuccess(json));
             })
             .catch(ex => {
@@ -31,7 +31,7 @@ function labsFetchRequest() {
 
 function labsFetchSuccess(body) {
     console.log('labsFetchSuccess');
-    console.log(body);
+    //console.log(body);
     return {
         type: types.LABS_FETCH_SUCCESS,
         body
@@ -50,7 +50,7 @@ function labsSave(url, state, httpMethod) {
             body: JSON.stringify(state),
         })
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
@@ -58,7 +58,7 @@ function labsSave(url, state, httpMethod) {
                 return response;
             })
             .then((response) => response.json())
-            .then(json => dispatch(labsFetchDataSuccess(json)))
+            .then(json => dispatch(labsFetchSuccess(json)))
             .catch(ex => {
                 //dispatch(itemsHasErrored(ex))
             });
@@ -67,19 +67,12 @@ function labsSave(url, state, httpMethod) {
 
 export function labsAdd(url, state) {
     console.log(url);
-    console.log(JSON.stringify(state));
+    //console.log(JSON.stringify(state));
     return labsSave(url, state, 'POST')
 }
 
 export function labsUpdate(url, state) {
     console.log(url);
-    console.log(JSON.stringify(state));
+    //console.log(JSON.stringify(state));
     return labsSave(url, state, 'PUT');
-}
-
-export function labsFetchDataSuccess(body) {
-    return {
-        type: types.LABS_FETCH_DATA_SUCCESS,
-        body: body
-    };
 }

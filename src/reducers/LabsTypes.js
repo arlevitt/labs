@@ -22,7 +22,6 @@ function labsReducer(state = initialState, action) {
             var field = Array.isArray(action.body) ? 'labsHistory' : 'currentLabs';
             return Object.assign({}, state, {
                 isLoading: false,
-                [field]: action.body,
                 [field]: action.body
             });
         default:

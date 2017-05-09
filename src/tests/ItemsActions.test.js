@@ -16,16 +16,16 @@ describe('async actions', () => {
     it('creates ITEMS_FETCH_DATA_SUCCESS when fetching items has been done', () => {
         nock('http://example.com/')
             .get('/posts')
-            .reply(200, { items: [] })
+            .reply(200, [{ items: [] }])
 
         const expectedActions = [
             { type: types.ITEMS_FETCH_REQUEST },
             { type: types.ITEMS_IS_LOADING, isLoading: true },
             { type: types.ITEMS_IS_LOADING, isLoading: false },
-            { type: types.ITEMS_FETCH_DATA_SUCCESS, body: { items: [] } }
+            { type: types.ITEMS_FETCH_DATA_SUCCESS, body: [{ items: [] }] }
         ];
 
-        const store = mockStore({ items: [] });
+        const store = mockStore([{ items: [] }]);
 
         return store.dispatch(actions.itemsFetchData(url))
             .then(() => { // return of async actions
