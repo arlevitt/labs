@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
 import { labsFetchData, labsAdd, labsUpdate} from '../actions/LabsActions';
-import moment from 'moment';
 import * as inputFieldUtils from '../utils/InputFieldUtils';
 
 import LabsInputField from './LabsInputField';
 
-const labsInputs = [
+export const labsInputs = [
     { type: 'date', name: 'date', label: 'Date', isRequired: true },
     { type: 'number', name: 'platelets', label: 'Platelets', range: '20-350', infusionCheckbox: 'Received Platelets' },
     { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
@@ -66,16 +65,8 @@ class LabsInputForm extends Component {
     }
 
     getLabsObj() {
+        console.log('currentLabs: ' + this.props.currentLabs);
         return this.props.currentLabs || {};
-    }
-
-    getFormattedValue(propertyName, fieldType) {
-        var value = this.state[propertyName];
-        if (fieldType === 'date' && value) {
-            value = moment(value).format('YYYY-MM-DD');
-        }
-
-        return value;
     }
 
     render() {
@@ -94,7 +85,7 @@ class LabsInputForm extends Component {
                                     return (
                                         <LabsInputField {...labsInput}
                                                             key={labsInput.name}
-                                                            value={this.getFormattedValue(labsInput.name, labsInput.type) || ''}
+                                                            value={inputFieldUtils.getFormattedValue(this.state[labsInput.name], labsInput.type) || ''}
                                                             onFieldChange={this.handleFieldChange}
                                         />
                                     );
@@ -116,7 +107,7 @@ class LabsInputForm extends Component {
 
 const mapStateToProps = (state) => {
     console.log('mapStateToProps currentLabs');
-    console.log(state.labsReducer.currentLabs);
+    //console.log('state currentLabs: ' + JSON.stringify(state.labsReducer.currentLabs));
     return {
         currentLabs: state.labsReducer.currentLabs
     };

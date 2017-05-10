@@ -56,6 +56,7 @@ class LabsHistory extends Component {
 
 const mapStateToProps = (state) => {
     console.log('mapStateToProps labsHistory');
+    //console.log(state.labsReducer.labsHistory);
     return {
         labsHistory: state.labsReducer.labsHistory,
     };
