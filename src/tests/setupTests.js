@@ -54,7 +54,7 @@ export const store = mockStore(
             labsHistory: data,
             currentLabs: {
                 date: new Date(2017,4,2).toJSON(),
-                magnesium: 1.1,
+                magnesium: 1.6,
                 potassium: 3.7
             }
         }

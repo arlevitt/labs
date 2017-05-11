@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InputFieldUtils from '../utils/InputFieldUtils';
 
 class LabsInputField extends Component {
     constructor(props) {
@@ -10,34 +11,11 @@ class LabsInputField extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        var value = newProps.value;
-        this.setState({value: value});
-        this.checkRange(value);
+        this.rangeClass = InputFieldUtils.getCssClass(this.props.range, newProps.value);
     }
 
     handleChange(event) {
         this.props.onFieldChange(event);
-    }
-
-    checkRange(value) {
-        if (!this.props.range || value === '') {
-            return;
-        }
-
-        var parts = this.props.range.split('-');
-        var min = parseFloat(parts[0]);
-        var max = parseFloat(parts[1]);
-        var className = 'input-group-addon glyphicon ';
-
-        if (value < min) {
-            this.rangeClass = className + 'glyphicon-triangle-bottom icon-out-of-range';
-        } else if (value > max) {
-            this.rangeClass = className + 'glyphicon-triangle-top icon-out-of-range';
-        } else if ((value >= min) && (value <= max)){
-            this.rangeClass = className + 'glyphicon-sunglasses icon-in-range';
-        } else {
-            this.rangeClass = className + 'glyphicon-sunglasses icon-transparent';
-        }
     }
 
     render() {

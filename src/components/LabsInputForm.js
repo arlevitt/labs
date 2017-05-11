@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ApiUrls } from '../constants/Urls';
 import { labsFetchData, labsAdd, labsUpdate} from '../actions/LabsActions';
-import * as inputFieldUtils from '../utils/InputFieldUtils';
+import InputFieldUtils from '../utils/InputFieldUtils';
 
 import LabsInputField from './LabsInputField';
 
@@ -12,8 +12,8 @@ export const labsInputs = [
     { type: 'number', name: 'hemoglobin', label: 'Hemoglobin', range: '13.5-17.5', infusionCheckbox: 'Received Transfusion' },
     { type: 'number', name: 'whitecount', label: 'White Count', range: '2.0-10.0' },
     { type: 'number', name: 'anc', label: 'Abs Neutrophils', range: '1.5-8.0', infusionCheckbox: 'Received Neupogen Shot' },
-    { type: 'number', name: 'magnesium', label: 'Magnesium', range: '1.5-2.5', infusionCheckbox: 'Received Infusion' },
     { type: 'number', name: 'potassium', label: 'Potassium', range: '3.6-5.2', infusionCheckbox: 'Received Infusion' },
+    { type: 'number', name: 'magnesium', label: 'Magnesium', range: '1.5-2.5', infusionCheckbox: 'Received Infusion' },
 ];
 
 class LabsInputForm extends Component {
@@ -47,10 +47,12 @@ class LabsInputForm extends Component {
     }
 
     handleFieldChange(event) {
+        console.log('handleFieldChange')
         const name = event.target.name;
 
-        var value = inputFieldUtils.getFieldValue(event);
+        var value = InputFieldUtils.getFieldValue(event);
         this.setState({[name]: value}, function () {
+            //console.log(name + ' is now set to: ' + value);
             //alert(name + ' is now set to: ' + value);
         });
     }
@@ -65,7 +67,6 @@ class LabsInputForm extends Component {
     }
 
     getLabsObj() {
-        console.log('currentLabs: ' + this.props.currentLabs);
         return this.props.currentLabs || {};
     }
 
@@ -85,7 +86,7 @@ class LabsInputForm extends Component {
                                     return (
                                         <LabsInputField {...labsInput}
                                                             key={labsInput.name}
-                                                            value={inputFieldUtils.getFormattedValue(this.state[labsInput.name], labsInput.type) || ''}
+                                                            value={InputFieldUtils.getFormattedValue(this.state[labsInput.name], labsInput.type)}
                                                             onFieldChange={this.handleFieldChange}
                                         />
                                     );
@@ -107,7 +108,7 @@ class LabsInputForm extends Component {
 
 const mapStateToProps = (state) => {
     console.log('mapStateToProps currentLabs');
-    //console.log('state currentLabs: ' + JSON.stringify(state.labsReducer.currentLabs));
+    //console.log('state currentLabs: ' + JSON.strngify(state.labsReducer.currentLabs));
     return {
         currentLabs: state.labsReducer.currentLabs
     };
