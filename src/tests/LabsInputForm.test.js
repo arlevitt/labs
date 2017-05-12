@@ -43,11 +43,16 @@ describe('Check LabsHistory inputs', () => {
         var formInput = formInputs.find('[name="magnesium"]');
 
         testCssClass(formInput, '', RangeClasses.Blank);
-        testCssClass(formInput, '0', RangeClasses.OutOfRangeLow);
-        testCssClass(formInput, '1', RangeClasses.OutOfRangeLow);
-        testCssClass(formInput, '2', RangeClasses.InRange);
-        testCssClass(formInput, '5', RangeClasses.OutOfRangeHigh);
+        testCssClass(formInput, 1, RangeClasses.OutOfRangeLow);
+        testCssClass(formInput, 2, RangeClasses.InRange);
+        testCssClass(formInput, 5, RangeClasses.OutOfRangeHigh);
+        testCssClass(formInput, 0, RangeClasses.OutOfRangeLow);
     });
+});
+
+test('form input shows zero instead of blank if existing value is 0', () => {
+    var formInput = formInputs.find('[name="whitecount"]');
+    expect(formInput.props().value).toBe(0);
 });
 
 function testCssClass(formInput, newValue, rangeClassConstant) {
@@ -65,9 +70,13 @@ function testCssClass(formInput, newValue, rangeClassConstant) {
     });
 
     expect(formInput.props().value).toBe(newValue);
-    expect(formInput.node.value).toBe(newValue);
+    expect(formInput.node.value).toBe(newValue.toString());
 
     var rangeClass = InputFieldUtils.getCssClass(rangeText, formInput.node.value);
     expect(inputAddon.html().indexOf(rangeClass)).not.toBe(-1);
     expect(rangeClass).toBe(rangeClassConstant);
+}
+
+function typeOf (obj) {
+    return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
 }
